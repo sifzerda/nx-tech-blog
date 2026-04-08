@@ -11,7 +11,7 @@ export default function Header() {
     const { isLoggedIn, logout } = useAuth();
 
     // Base links
-    const links = [{ href: '/', label: 'Main Page' }];
+    const links = [{ href: '/', label: 'Home' }];
 
     // Conditional links
     if (isLoggedIn) {
