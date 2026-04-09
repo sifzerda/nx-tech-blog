@@ -40,8 +40,8 @@ export default function ThoughtList({ thoughts = [], loading = false, error = nu
                             key={page}
                             onClick={() => setCurrentPage(page)}
                             className={`px-4 py-2 border rounded ${currentPage === page
-                                    ? "bg-[#06064d] text-[#c8efbb] cursor-default"
-                                    : "bg-white text-[#06064d] hover:bg-[#0b82c4] hover:text-white"
+                                ? "bg-[#06064d] text-[#c8efbb] cursor-default"
+                                : "bg-white text-[#06064d] hover:bg-[#0b82c4] hover:text-white"
                                 }`}
                             disabled={currentPage === page}>
                             {page}
