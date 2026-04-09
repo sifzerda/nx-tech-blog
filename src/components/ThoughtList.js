@@ -21,8 +21,7 @@ export default function ThoughtList({ thoughts = [] }) {
       {thoughts.map((thought, index) => (
         <article
           key={index}
-          className="border-[5px] border-[#06064d] bg-[#c8efbb]"
-        >
+          className="border-[5px] border-[#06064d] bg-[#c8efbb]">
           <div className="bg-[#06064d] text-[#c8efbb] flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-4 gap-4">
             <h2 className="text-2xl sm:text-4xl font-bold leading-tight sm:max-w-[70%] break-words">
               {thought.title}
