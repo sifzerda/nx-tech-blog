@@ -41,3 +41,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 /// [nx-tech-blog.vercel.app](https://nx-tech-blog.vercel.app/)
+
+
+
+
+
+
+TO DO:
+
+[ ] comment form < />
+[ ] thought form < />
+[ ] main page gets most recent 10 posts and arranges most recent top
+
+[ ] Redirect user to dashboard/profile page on login or signup
+[ ] create dashboard/signup page
+[ ] dash gets users posts and comments (recent activity)
+[ ] user can delete their own posts or comments - this causes the post or comment box to say 'this post/comment has been deleted by [user] or [admin]'
