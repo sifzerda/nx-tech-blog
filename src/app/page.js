@@ -103,9 +103,8 @@ export default function HomePage() {
       <section className="flex-1 flex justify-center py-12 px-4">
         <div className="w-full max-w-4xl space-y-6">
 
-      <ThoughtForm onAddThought={(newThought) => setThoughts([newThought, ...thoughts])} />
-      <ThoughtList thoughts={thoughts} />
-
+          <ThoughtForm onAddThought={(newThought) => setThoughts((prevThoughts) => [newThought, ...prevThoughts])} />
+          <ThoughtList thoughts={thoughts} />
 
           {/* Dummy posts for styling demo */}
 
