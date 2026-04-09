@@ -27,7 +27,15 @@ export async function POST(req) {
     }
 
     // Use your jose-based signJWT helper here
-    const token = await signJWT({ sub: user.id, username: user.username, email: user.email}, { expiresIn: '1h' });
+    const token = await signJWT(
+      {
+        id: user.id,
+        sub: user.id,
+        username: user.username,
+        email: user.email,
+      },
+      { expiresIn: '1h' }
+    );
 
     return jsonResponse({ token }, 200);
   } catch (error) {

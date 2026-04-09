@@ -1,53 +1,99 @@
 // components/ThoughtForm.js
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+function decodeJWT(token) {
+  try {
+    const payload = token.split(".")[1];
+    const decoded = JSON.parse(atob(payload));
+    return decoded;
+  } catch (err) {
+    console.error("Failed to decode JWT:", err);
+    return null;
+  }
+}
 
 export default function ThoughtForm({ onAddThought }) {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [user, setUser] = useState(null);
 
-  function handleSubmit(e) {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    const decoded = decodeJWT(token);
+    if (decoded) setUser(decoded);
+  }, []);
+
+  async function handleSubmit(e) {
     e.preventDefault();
-
     if (!title.trim() || !content.trim()) return;
 
-    const newThought = {
-      title,
-      content,
-      author: "You",
-      date: new Date().toLocaleDateString("en-AU", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
-    };
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      console.log("Submitting with token:", token);
 
-    onAddThought(newThought);
+      const response = await fetch("/api/thoughts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, content }),
+      });
 
-    setTitle("");
-    setContent("");
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      if (!response.ok) throw new Error(data.error || "Failed to create thought");
+
+      const newThought = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        author: data.user.username,
+        date: new Date(data.createdAt).toLocaleDateString("en-AU", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+      };
+
+      onAddThought?.(newThought);
+      setTitle("");
+      setContent("");
+    } catch (err) {
+      console.error("handleSubmit error:", err);
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!user) {
+    return (
+      <div className="border-[5px] border-[#06064d] bg-[#c8efbb] mb-8">
+        <div className="bg-[#06064d] px-4 py-4">
+          <h2 className="text-[#c8efbb] text-2xl sm:text-3xl font-bold">
+            Please log in
+          </h2>
+        </div>
+        <div className="p-4 text-[#222] text-lg">Please log in to leave a thought.</div>
+      </div>
+    );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="border-[5px] border-[#06064d] bg-[#c8efbb] mb-8"
-    >
+    <form onSubmit={handleSubmit} className="border-[5px] border-[#06064d] bg-[#c8efbb] mb-8">
       <div className="bg-[#06064d] px-4 py-4">
-        <h2 className="text-[#c8efbb] text-2xl sm:text-3xl font-bold">
-          What's on your mind?
-        </h2>
+        <h2 className="text-[#c8efbb] text-2xl sm:text-3xl font-bold">What's on your mind?</h2>
       </div>
-
       <div className="p-4 space-y-4">
         <div>
-          <label
-            htmlFor="title"
-            className="block text-[#06064d] font-bold text-lg mb-2"
-          >
-            Title
-          </label>
+          <label htmlFor="title" className="block text-[#06064d] font-bold text-lg mb-2">Title</label>
           <input
             id="title"
             type="text"
@@ -57,14 +103,8 @@ export default function ThoughtForm({ onAddThought }) {
             className="w-full border-[3px] border-[#06064d] px-4 py-3 bg-white text-[#222] outline-none focus:border-[#0b82c4]"
           />
         </div>
-
         <div>
-          <label
-            htmlFor="content"
-            className="block text-[#06064d] font-bold text-lg mb-2"
-          >
-            Thought
-          </label>
+          <label htmlFor="content" className="block text-[#06064d] font-bold text-lg mb-2">Thought</label>
           <textarea
             id="content"
             rows="5"
@@ -74,12 +114,12 @@ export default function ThoughtForm({ onAddThought }) {
             className="w-full border-[3px] border-[#06064d] px-4 py-3 bg-white text-[#222] outline-none resize-none focus:border-[#0b82c4]"
           />
         </div>
-
         <button
           type="submit"
-          className="bg-[#06064d] text-[#c8efbb] px-6 py-3 font-bold text-lg border-[3px] border-[#06064d] hover:bg-[#0b82c4] hover:text-white transition cursor-pointer"
+          disabled={loading}
+          className="bg-[#06064d] text-[#c8efbb] px-6 py-3 font-bold text-lg border-[3px] border-[#06064d] hover:bg-[#0b82c4] hover:text-white transition cursor-pointer disabled:opacity-50"
         >
-          Add Thought
+          {loading ? "Posting..." : "Add Thought"}
         </button>
       </div>
     </form>

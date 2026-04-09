@@ -2,9 +2,10 @@
 
 import ThoughtForm from "../components/ThoughtForm";
 import ThoughtList from "../components/ThoughtList";
-
+import { useState } from "react";
 
 export default function HomePage() {
+  const [thoughts, setThoughts] = useState([]);
 
   const posts = [
     {
@@ -83,24 +84,10 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#c8efbb] flex flex-col">
 
       <section className="flex-1 flex justify-center py-12 px-4">
-
-
-
-
-
-
-
-
-
-
-
         <div className="w-full max-w-4xl space-y-6">
 
-
-
-<ThoughtForm />
-<ThoughtList />
-
+          <ThoughtForm />
+          <ThoughtList />
 
           {posts.map((post, index) => (
             <article key={index} className="border-[5px] border-[#06064d] bg-[#c8efbb]">

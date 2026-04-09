@@ -50,7 +50,15 @@ export async function POST(req) {
     });
 
     // Automatically sign a token after successful signup
-    const token = await signJWT({ sub: user.id, email: user.email, username: user.username }, { expiresIn: '1h' });
+    const token = await signJWT(
+      {
+        id: user.id,
+        sub: user.id,
+        email: user.email,
+        username: user.username,
+      },
+      { expiresIn: '1h' }
+    );
 
     return jsonResponse({ message: 'User created successfully', token }, 201);
   } catch (error) {

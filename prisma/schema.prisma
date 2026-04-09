@@ -12,5 +12,15 @@ model User {
   username  String     @unique
   email     String     @unique
   password  String
+  thoughts  Thought[]
 }
 
+model Thought {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
