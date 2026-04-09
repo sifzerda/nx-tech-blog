@@ -1,5 +1,9 @@
 "use client";
 
+import ThoughtForm from "../components/ThoughtForm";
+import ThoughtList from "../components/ThoughtList";
+
+
 export default function HomePage() {
 
   const posts = [
@@ -79,7 +83,25 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#c8efbb] flex flex-col">
 
       <section className="flex-1 flex justify-center py-12 px-4">
+
+
+
+
+
+
+
+
+
+
+
         <div className="w-full max-w-4xl space-y-6">
+
+
+
+<ThoughtForm />
+<ThoughtList />
+
+
           {posts.map((post, index) => (
             <article key={index} className="border-[5px] border-[#06064d] bg-[#c8efbb]">
               <div className="bg-[#06064d] text-[#c8efbb] flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-4 gap-4">

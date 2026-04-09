@@ -57,3 +57,7 @@ TO DO:
 [ ] create dashboard/signup page
 [ ] dash gets users posts and comments (recent activity)
 [ ] user can delete their own posts or comments - this causes the post or comment box to say 'this post/comment has been deleted by [user] or [admin]'
+
+[ ] require auth true/logged on if user goes to post a thought
+[ ] leave comment form only displays if user logged in
+[ ] if user not logged in, it says user must log in to leave a comment/thought
