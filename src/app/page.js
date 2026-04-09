@@ -99,7 +99,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#c8efbb] flex flex-col">
+    <main className="min-h-screen flex flex-col">
       <section className="flex-1 flex justify-center py-12 px-4">
         <div className="w-full max-w-4xl space-y-6">
 
@@ -109,7 +109,7 @@ export default function HomePage() {
           {/* Dummy posts for styling demo */}
 
           {/*        {posts.map((post, index) => (
-            <article key={index} className="border-[5px] border-[#06064d] bg-[#c8efbb]">
+            <article key={index} className="border-[5px] border-[#06064d]">
               <div className="bg-[#06064d] text-[#c8efbb] flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-4 gap-4">
                 <h2 className="text-2xl sm:text-4xl font-bold leading-tight sm:max-w-[70%] break-words">
                   {post.title}

@@ -23,22 +23,21 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased border border-[#0b82c4]`}>
-      <body className="min-h-full flex flex-col bg-[#c8efbb]">
-        
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="flex flex-col min-h-screen">
         <AuthProvider>
-          
-          <main className="min-h-screen bg-[#c8efbb] flex flex-col ">
-            <Header />
+          {/* Header always at top */}
+          <Header />
 
-            <div className="flex-1 border-l-[4px] border-r-[4px] border-[#0b82c4]">
-              {children}
-            </div>
+          {/* Main content wrapper: full height minus header/footer */}
+          <div className="flex-1 flex flex-col justify-start items-center w-full">
+            {children}
+          </div>
 
-            <Footer />
-          </main>
+          {/* Footer stays at bottom */}
+          <Footer />
         </AuthProvider>
-        
       </body>
     </html>
   );
