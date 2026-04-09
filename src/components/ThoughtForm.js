@@ -54,7 +54,7 @@ export default function ThoughtForm({ onAddThought }) {
                 ...data, // keep id, title, content, user, createdAt
                 author: data.user?.username || "Anonymous",
             };
-            
+
             onAddThought?.(newThought);
             setTitle("");
             setContent("");
@@ -110,8 +110,7 @@ export default function ThoughtForm({ onAddThought }) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="bg-[#06064d] text-[#c8efbb] px-6 py-3 font-bold text-lg border-[3px] border-[#06064d] hover:bg-[#0b82c4] hover:text-white transition cursor-pointer disabled:opacity-50"
-                >
+                    className="bg-[#06064d] text-[#c8efbb] px-6 py-3 font-bold text-lg border-[3px] border-[#06064d] hover:bg-[#0b82c4] hover:text-white transition cursor-pointer disabled:opacity-50">
                     {loading ? "Posting..." : "Add Thought"}
                 </button>
             </div>

@@ -50,8 +50,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 TO DO:
 
 [ ] comment form < />
-[ ] thought form < />
-[ ] main page gets most recent 10 posts and arranges most recent top
+[x] thought form < />
+[x] main page gets most recent 10 posts and arranges most recent top
 
 [ ] Redirect user to dashboard/profile page on login or signup
 [ ] create dashboard/signup page
