@@ -46,11 +46,15 @@ export default function Header() {
                                 <button
                                     onClick={handleClick}
                                     type="button"
-                                    className="px-4 py-1 text-sm transition inline-block text-white">
+                                    className={`${pathname === "/logout"
+                                        ? "text-[#c8efbb]"
+                                        : "text-white hover:text-blue-400 cursor-pointer"
+                                        }`}>
                                     {label}
                                 </button>
 
                             ) : (
+
                                 <Link
                                     href={href}
                                     className={`${isActive

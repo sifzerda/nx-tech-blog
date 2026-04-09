@@ -1,14 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../lib/authContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(null);
+  const { login } = useAuth();
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login attempt:", { email, password });
+    setMessage(null);
+
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }, // <-- Add this to ensure JSON is parsed properly on server
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      login(data.token); // update context
+      router.push('/'); // redirect
+    } else {
+      setMessage(data.error || 'Login failed');
+    }
   };
 
   return (
