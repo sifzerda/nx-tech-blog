@@ -2,10 +2,28 @@
 
 import ThoughtForm from "../components/ThoughtForm";
 import ThoughtList from "../components/ThoughtList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function HomePage() {
   const [thoughts, setThoughts] = useState([]);
+
+  useEffect(() => {
+    async function fetchThoughts() {
+      try {
+        const res = await fetch("/api/thoughts");
+        const data = await res.json();
+        const mapped = data.map((t) => ({
+          ...t,
+          author: t.user?.username || "Anonymous",
+          date: t.createdAt,
+        }));
+        setThoughts(mapped);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchThoughts();
+  }, []);
 
   const posts = [
     {
@@ -82,14 +100,16 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#c8efbb] flex flex-col">
-
       <section className="flex-1 flex justify-center py-12 px-4">
         <div className="w-full max-w-4xl space-y-6">
 
-          <ThoughtForm />
-          <ThoughtList />
+      <ThoughtForm onAddThought={(newThought) => setThoughts([newThought, ...thoughts])} />
+      <ThoughtList thoughts={thoughts} />
 
-          {posts.map((post, index) => (
+
+          {/* Dummy posts for styling demo */}
+
+          {/*        {posts.map((post, index) => (
             <article key={index} className="border-[5px] border-[#06064d] bg-[#c8efbb]">
               <div className="bg-[#06064d] text-[#c8efbb] flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-4 gap-4">
                 <h2 className="text-2xl sm:text-4xl font-bold leading-tight sm:max-w-[70%] break-words">
@@ -103,8 +123,10 @@ export default function HomePage() {
               <div className="px-4 py-5 text-[#222] text-base sm:text-xl leading-relaxed max-w-3xl">
                 {post.content}
               </div>
-            </article>
-          ))}
+            </article>   
+
+          ))}      */}
+
         </div>
       </section>
 
